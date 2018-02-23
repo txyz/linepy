@@ -34,6 +34,9 @@ class Vector(object):
     def __str__(self):
         return ', '.join("{:.3e}".format(c) for c in self.Components)
 
+    def __hash__(self):
+        return hash(tuple(self.Components))
+
     def distanceFrom(self, rhs):
         """Return the distance from self to `rhs`, calculated with Euclidean
         metric.  `Rhs` should have the same size as self.  If not,
@@ -51,6 +54,14 @@ class Vector(object):
             raise TypeError("Vector size do not match.")
 
         return sum(self[i] * rhs[i] for i in range(self.Size))
+
+    def norm2(self):
+        """Squre of norm of vector."""
+        return sum(x*x for x in self.Components)
+
+    def norm(self):
+        """Norm of vector."""
+        return math.sqrt(self.norm2())
 
     def __neg__(self):
         NegVec = copy.copy(self)
